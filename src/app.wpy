@@ -1,0 +1,67 @@
+<style lang="less">
+@import "./styles/base";
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/home',
+      'pages/choice',
+      'pages/info',
+      'pages/authorize'
+    ],
+    window: {
+      backgroundTextStyle: 'dark',
+      navigationBarBackgroundColor: '#FFFFFF',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+      enablePullDownRefresh: false,
+      backgroundColor: '#EFEFEF'
+
+    },
+    tabBar: {
+      'color': '#999999',
+      'selectedColor': '#ff6a3c',
+      'backgroundColor': '#ffffff',
+      'borderStyle': 'black',
+      'list': [{
+        'pagePath': 'pages/home',
+        'text': '首页',
+        'iconPath': 'images/icon_home.png',
+        'selectedIconPath': 'images/icon_home_active.png'
+      }, {
+        'pagePath': 'pages/choice',
+        'text': '分类',
+        'iconPath': 'images/icon_classify.png',
+        'selectedIconPath': 'images/icon_classify_active.png'
+      }, {
+        'pagePath': 'pages/info',
+        'text': '我的',
+        'iconPath': 'images/icon_info.png',
+        'selectedIconPath': 'images/icon_info_active.png'
+      }]
+    }
+  }
+
+  globalData = {
+    userInfo: {
+      nickname: 'Hi,游客',
+      username: '点击去登录',
+      avatar: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+    }
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+    this.use('promisify')
+  }
+
+  onLaunch() {
+  }
+}
+</script>

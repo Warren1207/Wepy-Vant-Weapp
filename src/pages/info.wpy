@@ -1,0 +1,132 @@
+<template>
+    <view class="container">
+        <view class="header">
+          <navigator class="item" url="{{authorizeUrl}}">
+            <image class="avatarUrl" src="{{avatarUrl}}"></image>
+            <view class="nickName">{{nickName}}</view>
+          </navigator>  
+        </view>
+        <view class="info_block">
+          <navigator class="item" url="/pages/order">
+            <view class="item_content">
+              <image class="item_img" src="../images/icon_my_02.png"></image>
+              <view class="text">全部订单111</view>
+            </view>
+            <view class="arrow">&gt;</view>
+          </navigator>
+          <navigator class="item" url="/pages/reorder">
+            <view class="item_content">
+              <image class="item_img" src="../images/icon_my_02.png"></image>
+              <view class="text">补货订单</view>
+            </view>
+            <view class="arrow">&gt;</view>
+          </navigator>
+          <navigator class="item" url="/pages/points">
+            <view class="item_content">
+              <image class="item_img" src="../images/icon_my_03.png"></image>
+              <view class="text">我的积分</view>
+            </view>
+            <view class="arrow">&gt;</view>
+          </navigator>
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class Info extends wepy.page {
+      config = {
+        navigationBarTitleText: '个人中心'
+      }
+      components = {}
+      data = {
+        avatarUrl: '../images/touxiang.png',
+        nickName: '授权登录',
+        authorizeUrl: '/pages/authorize'
+      }
+      computed = {}
+      getUserInfoFn() {
+        const userInfo = wepy.getStorageSync('wl_authorize_user_info')
+        this.avatarUrl = userInfo.avatarUrl
+        this.nickName = userInfo.nickName
+        if (userInfo) {
+          this.authorizeUrl = '/pages/info'
+        }
+      }
+      methods = {
+      }
+      async onLoad() {
+        // const { userName, detailInfo, telNumber } = await wepy.chooseAddress()
+        // console.log(userName + detailInfo + telNumber)
+        wepy.showLoading({
+          title: '加载中'
+        })
+        let res = await wepy.getSetting()
+        /** 已授权 **/
+        if ((res.authSetting)['scope.userInfo']) {
+          this.getUserInfoFn()
+        }
+        wepy.hideLoading()
+      }
+      onShow() {
+        this.getUserInfoFn()
+      }
+    }
+</script>
+<style lang="less">
+  .header {
+    height: 200rpx;
+    width: 100%;
+    padding: 15rpx;
+    background-color: #ffffff;
+  }
+  .avatarUrl {
+    float: left;
+    width: 122rpx;
+    height: 122rpx;
+    border-radius: 1000px;
+    margin-left: 60rpx;
+  }
+  .nickName {
+    float: left;
+    margin-left: 30rpx;
+    font-size: 30rpx;
+    padding-top: 39rpx;
+  }
+
+.info_block {
+  margin-top: 10rpx;
+  .item {
+    border-top: 1rpx solid #dbdbdb;
+    background: #fff;
+    padding: 28rpx 28rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .item:last-child {
+    border-bottom: 1rpx solid #dbdbdb;
+  }
+  .item_content {
+    display: flex;
+    align-items: center;
+    .text {
+      margin-left: 20rpx;
+      color: #1a1a1a;
+    }
+  }
+  .item_img {
+    width: 42rpx;
+    height: 42rpx;
+  }
+  .arrow {
+    color: #cccccc;
+    font-size: 32rpx;
+  }
+  .tip {
+    color: #999;
+    font-size: 24rpx;
+    margin-top: 20rpx;
+    margin-left: 60rpx;
+  }
+}
+</style>

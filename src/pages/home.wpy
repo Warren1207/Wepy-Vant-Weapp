@@ -1,0 +1,30 @@
+<template>
+    <view class="container">
+        <van-button type="default">默认按钮</van-button>
+        <van-button type="primary">主要按钮</van-button>
+        <van-button type="warning">警告按钮</van-button>
+        <van-button type="danger">危险按钮</van-button>
+        <van-search value="{{ value }}" placeholder="请输入搜索关键词" />
+    </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class Home extends wepy.page {
+      config = {
+        navigationBarTitleText: '首页',
+        usingComponents: {
+          'van-button': '../components/vant/button/index',
+          'van-search': '../components/vant/search/index'
+        }
+      }
+      components = {}
+      data = {
+        value: ''
+      }
+      computed = {}
+      methods = {}
+      onLoad() {}
+    }
+</script>
+<style lang="less">
+</style>
